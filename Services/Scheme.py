@@ -1,11 +1,13 @@
-'''Evan Pavetto-Stewart'''
-'''Scheme'''
+#Evan Pavetto-Stewart
+#Scheme
 
 
 import json
 import os
 import shutil
 
+with open(os.path.abspath(os.pardir) + '/GS_Live/Schemes'):
+    pass
 ###
 # os.path.abspath(os.pardir) # This gets the path to ./GS_Live/
 # Right here
@@ -22,14 +24,14 @@ def create_scheme():
 
     '''Allows a user to create a scheme'''
 
-    '''Scheme Name'''
+    #Scheme Name
     name_in = input('Name: ')
 
     invalid_file_name = ['<','>',':','''"''','/',R'\'','|','?','*'] # R'\'' second quote?
     invalid = False # Invalid file name indicators
     invalid2 = True
 
-    '''Check for an invalid file name and replace spaces with _'s in file name'''
+    #Check for an invalid file name and replace spaces with _'s in file name
     while(invalid2 == True):
         if name_in == '':
             enter_file_name_message = '''No file name detected.
@@ -59,10 +61,10 @@ def create_scheme():
             invalid = False
 
 
-    '''Nose-axis'''
+    #Nose-axis
     nose_axis = input('Nose-axis: ')
 
-    '''Check for invalid nose-axis input'''
+    #Check for invalid nose-axis input
 
     nose_axis_input_message = '''Please input either x, y, or z 
     Nose-axis: '''
@@ -84,9 +86,8 @@ def create_scheme():
         except ValueError:
             stages_message2 = '''The number of stages must be an integer greater than 1'''
             print(stages_message2)
-            # stages = int(input(stages_message2)) # How do I make it so that there are infinite tries to put in a integer. If I try to do a while loop it raises an UnboundLocalError
 
-    '''Cd'''
+    #Cd
     Cd = []
     Cd_message = '''Cd can not be less than 0
     Cd: '''
@@ -97,7 +98,7 @@ def create_scheme():
             Cd_in = float(input(Cd_message))
         Cd.append(Cd_in)
 
-    '''a_f'''
+    #a_f
     a_f = []
     a_f_message = '''a_f can not be less than 0
     a_f: '''
@@ -108,7 +109,7 @@ def create_scheme():
             a_f_in = float(input(a_f_message))
         a_f.append(a_f_in)
 
-    '''m_i'''
+    #m_i
     m_i = []
     m_i_message = '''m_i can not be less than 0
     m_i: '''
@@ -119,7 +120,7 @@ def create_scheme():
             m_i_in = float(input(m_i_message))
         m_i.append(m_i_in)
 
-    '''m_f'''
+    #m_f
     m_f = []
     m_f_message = '''m_f can not be less than 0
     m_f: '''
@@ -130,7 +131,7 @@ def create_scheme():
             m_f_in = float(input(m_f_message))
         m_f.append(m_f_in)
 
-    '''isp'''
+    #isp
     isp = []
     isp_message = '''isp can not be less than 0
     isp: '''
@@ -141,36 +142,37 @@ def create_scheme():
             isp_in = float(input(isp_message))
         isp.append(isp_in)
 
-    '''Accel L Mode'''
+    #Accel L Mode
     accel_L_mode = input('Accel L Mode: ')
 
-    '''Accel H Mode'''
+    #Accel H Mode
     accel_H_mode = input('Accel H Mode: ')
 
-    '''Gyro Mode'''
+    #Gyro Mode
     gyro_mode = input('Gyro Mode: ')
 
-    '''Mag Mode'''
+    #Mag Mode
     mag_mode = input('Mag Mode: ')
 
-    '''Bar Mode'''
+    #Bar Mode
     bar_mode = input('Bar Mode: ')
 
-    '''Therm Mode'''
+    #Therm Mode
     therm_mode = input('Therm Mode: ')
 
-    '''Notes'''
+    #Notes
     notes = input('Notes: ')
 
-    '''Create Scheme and Filepath'''
+    #Create Scheme and Filepath
 
     created_scheme = {'name':name_in,'nose-axis':nose_axis,'stages':stages,'cd':Cd,'a_f':a_f,'m_i':m_f,'m_f':m_f,'isp':isp,'accel L mode':accel_L_mode,'accel H mode':accel_H_mode,'gyro mode':gyro_mode,'mag mode':mag_mode,'bar mode':bar_mode,'therm mode':therm_mode,'notes':notes}
 
     scheme_json = json.dumps(created_scheme,indent=4)
 
-    scheme_filepath = 'c:/Users/Evan/OneDrive/Documents/EmbryRiddle/Python Coding Projects/' + name_in
-
-    '''Save Scheme to Filepath'''
+    #scheme_filepath = 'c:/Users/Evan/OneDrive/Documents/EmbryRiddle/Python Coding Projects/' + name_in
+    
+    scheme_filepath = input('''Where do you want to save this scheme? ''') + name_in
+    #Save Scheme to Filepath
 
     try:
 
@@ -192,7 +194,7 @@ def copy_rename_scheme(scheme_filepath):
     try:
 
         new_name = input('Name of scheme copy: ')
-        new_path = 'c:/Users/Evan/OneDrive/Documents/EmbryRiddle/Python Coding Projects/' + new_name
+        new_path = input('''Where do you want to save this copy? ''') + new_name
 
         shutil.copyfile(scheme_filepath, new_path) # copy scheme
 
@@ -201,7 +203,7 @@ def copy_rename_scheme(scheme_filepath):
 
         scheme_copy['name'] = new_name # edit the name in the copy
 
-        '''Check for an invalid file name and replace spaces with _'s in file name'''
+        #Check for an invalid file name and replace spaces with _'s in file name
 
         invalid_file_name = ['<','>',':','''"''','/',R'\'','|','?','*'] # R'\'' second quote?
         invalid = False # Invalid file name indicators
@@ -248,14 +250,14 @@ def copy_rename_scheme(scheme_filepath):
     finally:
         print('Exit')
 
-#copy_rename_scheme('c:/Users/Evan/OneDrive/Documents/EmbryRiddle/Python Coding Projects/test_e')
+#copy_rename_scheme(os.path.dirname(input('File name: ')))
 
 def edit_scheme(scheme_filepath):
 
     '''Creates a copy of the scheme and allows the user to edit any value in the scheme copy'''
     '''If the user makes a mistake while editing any part of the scheme, they must say no to the finished editing question and start again from the beginning'''
 
-    scheme.copy_rename_scheme(scheme_filepath)
+    copy_rename_scheme(scheme_filepath)
 
     open_scheme_copy = open(scheme_filepath, 'r+')
     scheme_copy = json.load(open_scheme_copy)
@@ -281,10 +283,10 @@ def edit_scheme(scheme_filepath):
 
         if scheme_edit == 'A':
 
-            '''Edit Nose-axis'''
+            #Edit Nose-axis
             new_nose_axis = input('New Nose-axis: ')
 
-            '''Check for invalid nose-axis input'''
+            #Check for invalid nose-axis input
 
             new_nose_axis_input_message = '''Please input either x, y, or z 
             Nose-axis: '''
@@ -296,28 +298,28 @@ def edit_scheme(scheme_filepath):
 
         if scheme_edit == 'B':
 
-            '''Edit Stages'''
+            #Edit Stages
 
             # If the user wants to add stages and leave the previously created stages unchanged, they would have to reenter the data for those stages
             # If the user wants to edit the data for one stage, they would have to reenter the data for the other stages
+            new_valid_stages = False
+            while not new_valid_stages:
+                try:
 
-            try:
+                    new_stages = int(input(' New number of stages: '))
+                    new_stages_message = '''The new number of stages must be greater than one
+                    New number of stages: '''
 
-                new_stages = int(input(' New number of stages: '))
-                new_stages_message = '''The new number of stages must be greater than one
-                New number of stages: '''
+                    while(new_stages < 1):
+                        new_stages = int(input(new_stages_message))
 
-                while(new_stages < 1):
-                    new_stages = int(input(new_stages_message))
-
-            except ValueError:
-                new_stages_message2 = '''The new number of stages must be an integer
-                New number of stages: '''
-                new_stages = int(input(new_stages_message2)) # How do I make it so that there are infinite tries to put in a integer. If I try to do a while loop it raises an UnboundLocalError
+                except ValueError:
+                    new_stages_message2 = '''The new number of stages must be an integer
+                    New number of stages: '''
 
             scheme_copy['stages'] = new_stages # Replaces number of stages in scheme with new number of stages value
 
-            '''Edit Cd'''
+            #Edit Cd
             new_Cd = []
             new_Cd_message = '''New Cd can not be less than 0
             Cd: '''
@@ -330,7 +332,7 @@ def edit_scheme(scheme_filepath):
 
             scheme_copy['cd'] = new_Cd # Replaces Cd in scheme with Cd value
 
-            '''Edit a_f'''
+            #Edit a_f
             new_a_f = []
             new_a_f_message = '''New a_f can not be less than 0
             a_f: '''
@@ -343,7 +345,7 @@ def edit_scheme(scheme_filepath):
 
             scheme_copy['a_f'] = new_a_f # Replaces a_f in scheme with a_f value
 
-            '''Edit m_i'''
+            #Edit m_i
             new_m_i = []
             new_m_i_message = '''New m_i can not be less than 0
             m_i: '''
@@ -356,7 +358,7 @@ def edit_scheme(scheme_filepath):
 
             scheme_copy['m_i'] = new_m_i # Replaces m_i in scheme with m_i value
 
-            '''Edit m_f'''
+            #Edit m_f
             new_m_f = []
             new_m_f_message = '''New m_f can not be less than 0
             m_f: '''
@@ -369,7 +371,7 @@ def edit_scheme(scheme_filepath):
 
             scheme_copy['m_f'] = new_m_f # Replaces m_f in scheme with m_f value
 
-            '''Edit isp'''
+            #Edit isp
             new_isp = []
             new_isp_message = '''New isp can not be less than 0
             isp: '''
@@ -384,47 +386,47 @@ def edit_scheme(scheme_filepath):
 
         if scheme_edit == 'C':
 
-            '''Edit Accel L Mode'''
+            #Edit Accel L Mode
             new_accel_L_mode = input('New Accel L Mode: ')
             scheme_copy['accel_L_mode'] = new_accel_L_mode # Replaces Accel L Mode in scheme with Accel L Mode value
 
         if scheme_edit == 'D':
 
-            '''Edit Accel H Mode'''
+            #Edit Accel H Mode
             new_accel_H_mode = input('New Accel H Mode: ')
             scheme_copy['accel_H_mode'] = new_accel_H_mode # Replaces Accel H Mode in scheme with Accel H Mode value
 
         if scheme_edit == 'E':
 
-            '''Edit Gyro Mode'''
+            #Edit Gyro Mode
             new_gyro_mode = input('New Gyro Mode: ')
             scheme_copy['gyro mode'] = new_gyro_mode # Replaces Gyro Mode in scheme with Gyro Mode value
 
         if scheme_edit == 'F':
 
-            '''Edit Mag Mode'''
+            #Edit Mag Mode
             new_mag_mode = input('New Mag Mode: ')
             scheme_copy['mag mode'] = new_mag_mode # Replaces Mag Mode in scheme with Mag Mode value
 
         if scheme_edit == 'G':
 
-            '''Edit Bar Mode'''
+            #Edit Bar Mode
             new_bar_mode = input('New Bar Mode: ')
             scheme_copy['Bar mode'] = new_bar_mode # Replaces Bar Mode in scheme with Bar Mode value
 
         if scheme_edit == 'H':
 
-            '''Edit Therm Mode'''
+            #Edit Therm Mode
             new_therm_mode = input('New Therm Mode: ')
             scheme_copy['therm mode'] = new_therm_mode # Replaces Therm Mode in scheme with Therm Mode value
 
         if scheme_edit == 'I':
 
-            '''Edit Notes'''
-            new_gyro_mode = input('New Gyro Mode: ')
-            scheme_copy['gyro mode'] = new_gyro_mode # Replaces Gyro Mode in scheme with Gyro Mode value
+            #Edit Notes
+            new_notes = input('New Notes: ')
+            scheme_copy['notes'] = new_notes # Replaces notes in scheme with notes value
 
-        '''Asks the user for another input if the first input was not valid'''
+        #Asks the user for another input if the first input was not valid
 
         if scheme_edit != 'A' and scheme_edit != 'B' and scheme_edit != 'C' and scheme_edit != 'D' and scheme_edit != 'E' and scheme_edit != 'F' and scheme_edit != 'G' and scheme_edit != 'H' and scheme_edit != 'I':
 
@@ -457,7 +459,7 @@ def edit_scheme(scheme_filepath):
 
             editing = False # if yes, break out of editing while loop
 
-        '''If invalid finished_editing input'''
+        #If invalid finished_editing input
 
         if finished_editing != 'yes' and finished_editing != 'no':
 
@@ -485,7 +487,7 @@ def edit_scheme(scheme_filepath):
 
     open_scheme_copy2.close()
 
-#edit_scheme('c:/Users/Evan/OneDrive/Documents/EmbryRiddle/Python Coding Projects/test_e')
+#edit_scheme(os.path.dirname(input('File name: ')))
 
 def delete_scheme(scheme_filepath):
     '''Deletes a selected scheme but can also delete any file'''
@@ -495,7 +497,7 @@ def delete_scheme(scheme_filepath):
     except IOError:
         print("File not found. Please check the path.")
 
-#delete_scheme()
+#delete_scheme(os.path.dirname(input('File name: ')))
 
 
-# create_scheme()
+#create_scheme()
